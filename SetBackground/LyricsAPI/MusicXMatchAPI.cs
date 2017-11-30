@@ -15,7 +15,6 @@ namespace SetBackground.LyricsAPI
 
         public MusicXMatchAPI(string apiKey)
         {
-            //Configuration.Default.ApiKey.Add("apikey", "7304f2f18acb12a2f22f3338c60f3a9f");
             Configuration.Default.ApiKey.Add("apikey", apiKey);
             _api = new LyricsApi();
         }
@@ -27,7 +26,14 @@ namespace SetBackground.LyricsAPI
 
         public string GetLyrics(string songName, string artistName)
         {
-            return ParseResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName));
+            return ParseLyricsResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName));
+        }
+
+        public (string, string) GetLyricsAndLanguage(string songName, string artistName)
+        {
+            return 
+                (ParseLyricsResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName)),
+                ParseLanguageResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName)));
         }
 
         public string GetLyrics(string songName, string artistName, string albumName)
@@ -35,12 +41,20 @@ namespace SetBackground.LyricsAPI
             return GetLyrics(songName, artistName);
         }
 
-        private string ParseResponse(InlineResponse2007 response)
+        private string ParseLyricsResponse(InlineResponse2007 response)
         {
             if (response == null || response.Message == null || response.Message.Header == null || response.Message.Header.StatusCode != 200)
                 return string.Empty;
 
             return response.Message.Body.Lyrics.LyricsBody;
+        }
+
+        private string ParseLanguageResponse(InlineResponse2007 response)
+        {
+            if (response == null || response.Message == null || response.Message.Header == null || response.Message.Header.StatusCode != 200)
+                return string.Empty;
+
+            return response.Message.Body.Lyrics.LyricsLanguage;
         }
     }
 }
