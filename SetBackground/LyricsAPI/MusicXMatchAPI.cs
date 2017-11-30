@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SetBackground.LyricsAPI
 {
-    class MusicMatchAPI : ILyricsProvider
+    class MusicXMatchAPI : ILyricsProvider
     {
         public string GetLyrics(string songName)
         {

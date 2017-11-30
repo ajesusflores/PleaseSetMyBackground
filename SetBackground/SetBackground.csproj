@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IO.Swagger">
+      <HintPath>..\..\musicXMatch-csharp-client\src\IO.Swagger\bin\Debug\IO.Swagger.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -49,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LyricsAPI\ILyricsProvider.cs" />
-    <Compile Include="LyricsAPI\MusicMatchAPI.cs" />
+    <Compile Include="LyricsAPI\MusicXMatchAPI.cs" />
     <Compile Include="MusicAPI\IMusicProvider.cs" />
     <Compile Include="MusicAPI\SongResult.cs" />
     <Compile Include="MusicAPI\SpotifyWeb.cs" />
