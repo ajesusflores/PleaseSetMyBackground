@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LyricsAPI\ILyricsProvider.cs" />
+    <Compile Include="LyricsAPI\MusicMatchAPI.cs" />
     <Compile Include="MusicAPI\IMusicProvider.cs" />
     <Compile Include="MusicAPI\SongResult.cs" />
     <Compile Include="MusicAPI\SpotifyWeb.cs" />
