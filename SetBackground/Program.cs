@@ -17,15 +17,24 @@ namespace SetBackground
 
         static void Main(string[] args)
         {
-            var spotify = new SpotifyWeb("http://localhost", 8000, "1ac6c5dcd98548c088f861b3908260d1", Scope.UserReadPlaybackState);
-            
+            var lastSong = string.Empty;
+            var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
+            Console.WriteLine("start");
             var timer = new Timer((e) =>
             {
-                Console.WriteLine("start");
-
-                var s = spotify.GetCurrentSong();
-
-
+                var song = spotify.GetCurrentSong();
+                if(song != null && song.Title != null)
+                {
+                    if(lastSong != song.Title)
+                    {
+                        lastSong = song.Title;
+                        Console.WriteLine(song.Title);
+                    }
+                    
+                }
+                    
+                else
+                    Console.WriteLine("no song");
             }, null, startTime, interval);
 
             Console.ReadLine();

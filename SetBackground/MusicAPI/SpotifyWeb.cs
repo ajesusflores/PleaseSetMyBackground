@@ -24,6 +24,10 @@ namespace SetBackground.MusicAPI
         {
             FullTrack song = _spotifyAPI.GetPlayback().Item ?? _spotifyAPI.GetPlayingTrack().Item;
 
+            var devs = _spotifyAPI.GetDevices();
+
+
+            //_spotifyAPI.getuser
             if (song != null)
                 return new SongResult() { Album = song.Album.Name, Artist = string.Join(", ", song.Artists.Select(x => x.Name)), Title = song.Name };
 
