@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LyricsAPI\ILyricsProvider.cs" />
+    <Compile Include="LyricsAPI\GeniusAPI.cs" />
     <Compile Include="LyricsAPI\MusicXMatchAPI.cs" />
     <Compile Include="MusicAPI\IMusicProvider.cs" />
     <Compile Include="MusicAPI\SongResult.cs" />
