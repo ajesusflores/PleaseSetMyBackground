@@ -33,6 +33,11 @@ namespace SetBackground
                         lastSong = song.Title;
                         Console.WriteLine($"{song.Artist} - {song.Title}: ");
                         var lyrics = musicMatch.GetLyricsAndLanguage(lastSong, song.Artist);
+                        if(string.IsNullOrEmpty(lyrics.Item1))
+                        {
+                            Console.WriteLine("*2nd Call to lyrics Service");
+                            lyrics = musicMatch.GetLyricsAndLanguage(lastSong, null);
+                        }
                         Console.WriteLine(lyrics);
 
 

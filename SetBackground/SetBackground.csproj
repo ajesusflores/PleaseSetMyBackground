@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LanguageAPI\IlanguageProvider.cs" />
+    <Compile Include="LanguageAPI\MicrosoftTextAnalytics.cs" />
+    <Compile Include="LanguageAPI\WatsonNLU.cs" />
     <Compile Include="LyricsAPI\ILyricsProvider.cs" />
     <Compile Include="LyricsAPI\GeniusAPI.cs" />
     <Compile Include="LyricsAPI\MusicXMatchAPI.cs" />
