@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace SetBackground.LanguageAPI
 {
-    class WatsonNLU
+    public class WatsonNLU : IlanguageProvider
     {
+        public string GetLanguage(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string TranslateTo(string originalText, string originalLanguage, string targetLanguage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string TranslateTo(string originalText, string targetLanguage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
