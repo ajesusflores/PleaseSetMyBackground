@@ -8,6 +8,11 @@ namespace SetBackground.LanguageAPI
 {
     public class WatsonNLU : IlanguageProvider
     {
+        public string[] ExtractKeyPhrases(string text, string language)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetLanguage(string text)
         {
             throw new NotImplementedException();

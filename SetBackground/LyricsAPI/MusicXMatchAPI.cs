@@ -48,7 +48,7 @@ namespace SetBackground.LyricsAPI
             if (response.Message.Body.Lyrics.Restricted == 1)
                 return "Restricted";
 
-            return response.Message.Body.Lyrics.LyricsBody;
+            return response.Message.Body.Lyrics.LyricsBody.Replace("******* This Lyrics is NOT for Commercial use *******", string.Empty);
         }
 
         private string ParseLanguageResponse(InlineResponse2007 response)

@@ -41,8 +41,9 @@ namespace SetBackground
                             lyrics = musicMatch.GetLyricsAndLanguage(lastSong, null);
                         }
                         Console.WriteLine(lyrics);
-                        var r = msText.GetLanguage(lyrics.Item1);
-
+                        var songLanguage = msText.GetLanguage(lyrics.Item1);
+                        var songKeys = msText.ExtractKeyPhrases(lyrics.Item1, songLanguage);
+                        Console.WriteLine(string.Join(Environment.NewLine, songKeys));
                     }
                     
                 }

@@ -31,10 +31,8 @@ namespace SetBackground.LanguageAPI
                     {
                         new Input("1", text)
                     }));
-
-
             if (result.Documents.Any())
-                return result.Documents.First().DetectedLanguages.First().Name;
+                return result.Documents.First().DetectedLanguages.First().Iso6391Name;
             return "en";
         }
 
@@ -48,9 +46,19 @@ namespace SetBackground.LanguageAPI
             throw new NotImplementedException();
         }
 
-        public string[] ExtractKeyPhrases(string text)
+        public string[] ExtractKeyPhrases(string text, string language)
         {
-            throw new NotImplementedException();
+            KeyPhraseBatchResult result = _AnalyticsClient.KeyPhrases(
+                new MultiLanguageBatchInput(
+                    new List<MultiLanguageInput>()
+                    {
+                        new MultiLanguageInput(language, "1", text)
+                    }));
+
+            if (result.Documents.Any())
+                return result.Documents.First().KeyPhrases.ToArray();
+
+            return new string[] { "Restricted" };
         }
     }
 }
