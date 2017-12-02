@@ -45,6 +45,8 @@ namespace SetBackground.LyricsAPI
         {
             if (response == null || response.Message == null || response.Message.Header == null || response.Message.Header.StatusCode != 200)
                 return string.Empty;
+            if (response.Message.Body.Lyrics.Restricted == 1)
+                return "Restricted";
 
             return response.Message.Body.Lyrics.LyricsBody;
         }
