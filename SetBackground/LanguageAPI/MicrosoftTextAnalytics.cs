@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
+using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +10,32 @@ namespace SetBackground.LanguageAPI
 {
     public class MicrosoftTextAnalytics : IlanguageProvider
     {
+        ITextAnalyticsAPI _AnalyticsClient;
+
         public MicrosoftTextAnalytics()
         {
-            var k1 = "69416bac944d49478e92e29dd5355e3f";
-            var k2 = "8ef1f05f3b084e2cac7269cb54a56258";
+            _AnalyticsClient =  new TextAnalyticsAPI();
+            _AnalyticsClient.AzureRegion = AzureRegions.Westus;
+
+            var k1 = "3d3aa4746bd248fe9c97064712e02e93";
+            var k2 = "745809d0d0694df6b430c6b6d0edb5c3";
+
+            _AnalyticsClient.SubscriptionKey = k1;
         }
+
         public string GetLanguage(string text)
         {
-            throw new NotImplementedException();
+            LanguageBatchResult result = _AnalyticsClient.DetectLanguage(
+                new BatchInput(
+                    new List<Input>()
+                    {
+                        new Input("1", text)
+                    }));
+
+
+            if (result.Documents.Any())
+                return result.Documents.First().DetectedLanguages.First().Name;
+            return "en";
         }
 
         public string TranslateTo(string originalText, string originalLanguage, string targetLanguage)
@@ -24,6 +44,11 @@ namespace SetBackground.LanguageAPI
         }
 
         public string TranslateTo(string originalText, string targetLanguage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] ExtractKeyPhrases(string text)
         {
             throw new NotImplementedException();
         }

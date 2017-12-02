@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
 using SetBackground.MusicAPI;
 using SetBackground.LyricsAPI;
+using SetBackground.LanguageAPI;
 
 namespace SetBackground
 {
@@ -21,6 +22,7 @@ namespace SetBackground
             var lastSong = string.Empty;
             var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI("7304f2f18acb12a2f22f3338c60f3a9f");
+            var msText = new MicrosoftTextAnalytics();
 
             var timer = new Timer((e) =>
             {
@@ -39,7 +41,7 @@ namespace SetBackground
                             lyrics = musicMatch.GetLyricsAndLanguage(lastSong, null);
                         }
                         Console.WriteLine(lyrics);
-
+                        var r = msText.GetLanguage(lyrics.Item1);
 
                     }
                     

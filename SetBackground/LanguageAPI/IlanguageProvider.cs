@@ -11,5 +11,6 @@ namespace SetBackground.LanguageAPI
         string GetLanguage(string text);
         string TranslateTo(string originalText, string originalLanguage, string targetLanguage);
         string TranslateTo(string originalText, string targetLanguage);
+        string[] ExtractKeyPhrases(string text);
     }
 }
