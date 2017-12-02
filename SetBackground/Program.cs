@@ -22,18 +22,20 @@ namespace SetBackground
             var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI("7304f2f18acb12a2f22f3338c60f3a9f");
 
-            Console.WriteLine("start");
             var timer = new Timer((e) =>
             {
+                Console.WriteLine("==========================S T A R T==========================");
                 var song = spotify.GetCurrentSong();
                 if(song != null && song.Title != null)
                 {
                     if(lastSong != song.Title)
                     {
                         lastSong = song.Title;
-                        Console.Write($"{song.Title}: ");
-                        var lyrics = musicMatch.GetLyrics(lastSong, song.Artist);
+                        Console.WriteLine($"{song.Artist} - {song.Title}: ");
+                        var lyrics = musicMatch.GetLyricsAndLanguage(lastSong, song.Artist);
                         Console.WriteLine(lyrics);
+
+
                     }
                     
                 }

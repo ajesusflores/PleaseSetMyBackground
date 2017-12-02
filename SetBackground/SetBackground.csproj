@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageAPI\IlanguageProvider.cs" />
     <Compile Include="LyricsAPI\ILyricsProvider.cs" />
     <Compile Include="LyricsAPI\GeniusAPI.cs" />
     <Compile Include="LyricsAPI\MusicXMatchAPI.cs" />
