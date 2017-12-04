@@ -36,6 +36,15 @@
     <Reference Include="IO.Swagger">
       <HintPath>..\..\musicXMatch-csharp-client\src\IO.Swagger\bin\Debug\IO.Swagger.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.CognitiveServices.Language, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.CognitiveServices.Language.1.0.0-preview\lib\net452\Microsoft.Azure.CognitiveServices.Language.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.10\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.10\lib\net452\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -59,12 +68,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageAPI\IlanguageProvider.cs" />
+    <Compile Include="LanguageAPI\MicrosoftTextAnalytics.cs" />
+    <Compile Include="LanguageAPI\WatsonNLU.cs" />
     <Compile Include="LyricsAPI\ILyricsProvider.cs" />
     <Compile Include="LyricsAPI\GeniusAPI.cs" />
     <Compile Include="LyricsAPI\MusicXMatchAPI.cs" />
     <Compile Include="MusicAPI\IMusicProvider.cs" />
     <Compile Include="MusicAPI\SongResult.cs" />
     <Compile Include="MusicAPI\SpotifyWeb.cs" />
+    <Compile Include="PhotographyAPI\IPhotographyProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,5 +85,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
