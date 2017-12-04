@@ -8,6 +8,7 @@ using SpotifyAPI.Web.Enums;
 using SetBackground.MusicAPI;
 using SetBackground.LyricsAPI;
 using SetBackground.LanguageAPI;
+using System.Configuration;
 
 namespace SetBackground
 {
@@ -19,6 +20,9 @@ namespace SetBackground
 
         static void Main(string[] args)
         {
+            var configs = ConfigurationManager.GetSection("APIs/*");
+            //var configs = ConfigurationManager.GetSection("APIs/LanguageAPI");
+
             var lastSong = string.Empty;
             var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI("7304f2f18acb12a2f22f3338c60f3a9f");
