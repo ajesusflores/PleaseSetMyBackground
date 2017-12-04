@@ -31,9 +31,17 @@ namespace SetBackground.LyricsAPI
 
         public (string, string) GetLyricsAndLanguage(string songName, string artistName)
         {
-            return 
-                (ParseLyricsResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName)),
-                ParseLanguageResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName)));
+            try
+            {
+                var lyrics = ParseLyricsResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName));
+                var language = ParseLanguageResponse(_api.MatcherLyricsGetGet(null, null, songName, artistName));
+                return
+                    (lyrics, language);
+            }
+            catch (ApiException)
+            {   
+                return ("Restricted", "en");
+            }
         }
 
         public string GetLyrics(string songName, string artistName, string albumName)

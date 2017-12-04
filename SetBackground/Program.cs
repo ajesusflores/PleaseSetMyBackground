@@ -50,8 +50,6 @@ namespace SetBackground
                 else
                     Console.WriteLine("no song");
             }, null, startTime, interval);
-            
-            
 
             Console.ReadLine();
         }
