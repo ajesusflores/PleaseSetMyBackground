@@ -9,6 +9,8 @@ using SetBackground.MusicAPI;
 using SetBackground.LyricsAPI;
 using SetBackground.LanguageAPI;
 using System.Configuration;
+using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace SetBackground
 {
@@ -20,13 +22,15 @@ namespace SetBackground
 
         static void Main(string[] args)
         {
-            var configs = ConfigurationManager.GetSection("APIs/*");
-            //var configs = ConfigurationManager.GetSection("APIs/LanguageAPI");
+            var LanguageConfig = ConfigurationManager.GetSection("APIs/LanguageAPI") as NameValueCollection;
+            var MSAnalyticsKey = LanguageConfig["MSTextAnalyticsK1"];
+
+
 
             var lastSong = string.Empty;
             var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI("7304f2f18acb12a2f22f3338c60f3a9f");
-            var msText = new MicrosoftTextAnalytics();
+            var msText = new MicrosoftTextAnalytics(MSAnalyticsKey);
 
             var timer = new Timer((e) =>
             {
