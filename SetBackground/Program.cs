@@ -11,6 +11,7 @@ using SetBackground.LanguageAPI;
 using System.Configuration;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using SetBackground.PhotographyAPI;
 
 namespace SetBackground
 {
@@ -33,14 +34,20 @@ namespace SetBackground
             var spotifyRedirectUrl = musicConfig["SpotifyRedirectUrl"];
             var spotifRedirectPort = int.Parse(musicConfig["SpotifyListeningPort"]);
 
+            var photosConfig = ConfigurationManager.GetSection("APIs/PhotographyAPI") as NameValueCollection;
+            var flickrKey = lyricsConfig["FlickrAPI"];
+
             var lastSong = string.Empty;
             var spotify = new SpotifyWeb(spotifyRedirectUrl, spotifRedirectPort, spotifyKey, Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI(musicXMatchKey);
             var msText = new MicrosoftTextAnalytics(MSAnalyticsKey);
+            var flickr = new FlickrAPI(flickrKey);
+
+            Console.WriteLine("==========================S T A R T==========================");
 
             var timer = new Timer((e) =>
             {
-                Console.WriteLine("==========================S T A R T==========================");
+                Console.WriteLine("**New Iteration**");
                 var song = spotify.GetCurrentSong();
                 if(song != null && song.Title != null)
                 {
@@ -57,9 +64,12 @@ namespace SetBackground
                         Console.WriteLine(lyrics);
                         var songLanguage = msText.GetLanguage(lyrics.Item1);
                         var songKeys = msText.ExtractKeyPhrases(lyrics.Item1, songLanguage);
+
+                        var algo = flickr.GetImageFromText(songKeys.First());
+
                         Console.WriteLine(string.Join(Environment.NewLine, songKeys));
-                    }
-                    
+                    }else
+                        Console.WriteLine("no new song");
                 }
                 else
                     Console.WriteLine("no song");

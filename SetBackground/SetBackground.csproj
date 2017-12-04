@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FlickrNet, Version=3.24.0.0, Culture=neutral, PublicKeyToken=2491df59efa5d132, processorArchitecture=MSIL">
+      <HintPath>..\packages\FlickrNet.3.24.0\lib\net20\FlickrNet.dll</HintPath>
+    </Reference>
     <Reference Include="IO.Swagger">
       <HintPath>..\..\musicXMatch-csharp-client\src\IO.Swagger\bin\Debug\IO.Swagger.dll</HintPath>
     </Reference>
@@ -78,6 +81,7 @@
     <Compile Include="MusicAPI\IMusicProvider.cs" />
     <Compile Include="MusicAPI\SongResult.cs" />
     <Compile Include="MusicAPI\SpotifyWeb.cs" />
+    <Compile Include="PhotographyAPI\FlickrAPI.cs" />
     <Compile Include="PhotographyAPI\IPhotographyProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
