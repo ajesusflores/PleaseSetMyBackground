@@ -8,6 +8,9 @@ using SpotifyAPI.Web.Enums;
 using SetBackground.MusicAPI;
 using SetBackground.LyricsAPI;
 using SetBackground.LanguageAPI;
+using System.Configuration;
+using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace SetBackground
 {
@@ -19,10 +22,21 @@ namespace SetBackground
 
         static void Main(string[] args)
         {
+            var languageConfig = ConfigurationManager.GetSection("APIs/LanguageAPI") as NameValueCollection;
+            var MSAnalyticsKey = languageConfig["MSTextAnalyticsK1"];
+
+            var lyricsConfig = ConfigurationManager.GetSection("APIs/LyricsAPI") as NameValueCollection;
+            var musicXMatchKey = lyricsConfig["MusicXMatchKey"];
+
+            var musicConfig = ConfigurationManager.GetSection("APIs/MusicAPI") as NameValueCollection;
+            var spotifyKey = musicConfig["SpotifyKey"];
+            var spotifyRedirectUrl = musicConfig["SpotifyRedirectUrl"];
+            var spotifRedirectPort = int.Parse(musicConfig["SpotifyListeningPort"]);
+
             var lastSong = string.Empty;
-            var spotify = new SpotifyWeb("http://localhost", 8000, "477f1b8f37194360b9744d0d087a1d1b", Scope.UserReadPlaybackState);
-            var musicMatch = new MusicXMatchAPI("7304f2f18acb12a2f22f3338c60f3a9f");
-            var msText = new MicrosoftTextAnalytics();
+            var spotify = new SpotifyWeb(spotifyRedirectUrl, spotifRedirectPort, spotifyKey, Scope.UserReadPlaybackState);
+            var musicMatch = new MusicXMatchAPI(musicXMatchKey);
+            var msText = new MicrosoftTextAnalytics(MSAnalyticsKey);
 
             var timer = new Timer((e) =>
             {
