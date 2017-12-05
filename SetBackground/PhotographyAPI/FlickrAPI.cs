@@ -12,17 +12,35 @@ namespace SetBackground.PhotographyAPI
         Flickr _flickrAPI;
         public FlickrAPI(string apiKey)
         {
-            apiKey = "96a7dc47f0de79ed8c6e0f1498324c7c";
             _flickrAPI = new Flickr(apiKey);
         }
 
         public dynamic GetImageFromText(string textToSearch)
         {
-            var options = new PhotoSearchOptions { PerPage = 5 };
+            var options = new PhotoSearchOptions
+            {
+                PerPage = 5,
+                Text = textToSearch,
+                SortOrder = PhotoSearchSortOrder.InterestingnessDescending,
+                MediaType = MediaType.Photos,
+                Extras = PhotoSearchExtras.MediumUrl | PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountComments | PhotoSearchExtras.CountFaves,
+                
+            };
 
-            var s = _flickrAPI.PhotosSearch(options);
+            var photos = _flickrAPI.PhotosSearch(options)
+                            .OrderByDescending(x => x.CountComments + x.CountFaves);
 
-            return "";
+            
+
+            if (!photos.Any())
+                return "";
+
+            return photos.FirstOrDefault().DoesLargeExist ? 
+                        photos.FirstOrDefault().LargeUrl : 
+                        photos.FirstOrDefault().DoesMediumExist ? 
+                            photos.FirstOrDefault().MediumUrl : 
+                            photos.FirstOrDefault().SmallUrl;
+
         }
     }
 }
