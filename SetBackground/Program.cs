@@ -72,7 +72,9 @@ namespace SetBackground
                             Console.WriteLine("*2nd Call to lyrics Service");
                             lyrics = musicMatch.GetLyricsAndLanguage(lastSong, null);
                         }
+                        lyrics.Item1 = lyrics.Item1.Replace("\n", " ");
                         Console.WriteLine(lyrics);
+
                         var songLanguage = msText.GetLanguage(lyrics.Item1);
                         var songKeys = msText.ExtractKeyPhrases(lyrics.Item1, songLanguage);
 
@@ -84,7 +86,6 @@ namespace SetBackground
                         string photo = flickr.GetImageFromText(textToSearch);
                         var fileName = photo.DownloadImageFromUrl("C:/newBackground");
                         SetWallpaper(fileName);
-                        //Process.Start();
 
                         Console.WriteLine($"{textToSearch}: {photo}" );
                     }
@@ -103,34 +104,22 @@ namespace SetBackground
             if (!keys.Any())
                 return string.Empty;
 
-            return keys[0].Contains(" ") ? 
-                    keys[0]  :
-                    keys[1].Contains(" ") ?
-                        keys[1] :
-                        string.Format($"{keys[0]} {keys[1]}");
+            var result = keys.FirstOrDefault(x => x.Contains(" "));
+
+            return result ?? (keys[0].Contains(" ") ?
+                                keys[0] :
+                                keys[1].Contains(" ") ?
+                                keys[1] :
+                                string.Format($"{keys[0]} {keys[1]}"));
         }
 
         static void SetWallpaper(string fileName)
         {
 
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-            //if (style == Style.Stretched)
-            //{
-            //key.SetValue(@"WallpaperStyle", 2.ToString());
-            //key.SetValue(@"TileWallpaper", 0.ToString());
-            //}
 
-            //if (style == Style.Centered)
-            //{
-            //key.SetValue(@"WallpaperStyle", 1.ToString());
-            //key.SetValue(@"TileWallpaper", 0.ToString());
-            //}
-
-            //if (style == Style.Tiled)
-            //{
-            key.SetValue(@"WallpaperStyle", 1.ToString());
-            key.SetValue(@"TileWallpaper", 1.ToString());
-            //}
+            key.SetValue(@"WallpaperStyle", 2.ToString());
+            key.SetValue(@"TileWallpaper", 0.ToString());
 
             SystemParametersInfo(SPI_SETDESKWALLPAPER,
                 0,
