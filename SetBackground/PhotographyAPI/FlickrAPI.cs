@@ -12,17 +12,54 @@ namespace SetBackground.PhotographyAPI
         Flickr _flickrAPI;
         public FlickrAPI(string apiKey)
         {
-            apiKey = "96a7dc47f0de79ed8c6e0f1498324c7c";
             _flickrAPI = new Flickr(apiKey);
         }
 
         public dynamic GetImageFromText(string textToSearch)
         {
-            var options = new PhotoSearchOptions { PerPage = 5 };
+            var options = new PhotoSearchOptions
+            {
+                PerPage = 3,
+                Text = textToSearch,
+                SortOrder = PhotoSearchSortOrder.InterestingnessDescending,
+                MediaType = MediaType.Photos,
+                SafeSearch = SafetyLevel.Moderate,
+                Extras =  PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountComments | PhotoSearchExtras.CountFaves,
+                
+            };
 
-            var s = _flickrAPI.PhotosSearch(options);
+            var options2 = new PhotoSearchOptions
+            {
+                PerPage = 3,
+                Text = textToSearch,
+                SortOrder = PhotoSearchSortOrder.Relevance,
+                Tags = textToSearch.Split(' ')[0],
+                MediaType = MediaType.Photos,
+                SafeSearch = SafetyLevel.Moderate,
+                Extras = PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountFaves,
 
-            return "";
+            };
+
+            var photos = _flickrAPI.PhotosSearch(options)
+                            .Concat(_flickrAPI.PhotosSearch(options2)
+                                        .OrderByDescending(x => x.CountFaves))
+                            .OrderByDescending(x => x.CountFaves);
+
+            var orderedPhotos = photos.Where(x => x.DoesLargeExist);
+            if (!orderedPhotos.Any())
+                orderedPhotos = photos;
+
+
+
+            if (!photos.Any())
+                return "";
+
+            return orderedPhotos.FirstOrDefault().DoesLargeExist ?
+                        orderedPhotos.FirstOrDefault().LargeUrl :
+                        orderedPhotos.FirstOrDefault().DoesMediumExist ?
+                            orderedPhotos.FirstOrDefault().MediumUrl :
+                            orderedPhotos.FirstOrDefault().SmallUrl;
+
         }
     }
 }
