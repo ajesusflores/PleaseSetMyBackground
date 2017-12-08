@@ -24,16 +24,17 @@ namespace SetBackground.PhotographyAPI
                 SortOrder = PhotoSearchSortOrder.InterestingnessDescending,
                 MediaType = MediaType.Photos,
                 SafeSearch = SafetyLevel.Moderate,
-                Extras =  PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountComments | PhotoSearchExtras.CountFaves,
+                Extras =  PhotoSearchExtras.LargeUrl |  PhotoSearchExtras.CountFaves,
                 
             };
 
             var options2 = new PhotoSearchOptions
             {
                 PerPage = 3,
-                Text = textToSearch,
+                //Text = textToSearch,
                 SortOrder = PhotoSearchSortOrder.Relevance,
                 Tags = textToSearch.Split(' ')[0],
+                //Tags = textToSearch.Split(' ')[0],
                 MediaType = MediaType.Photos,
                 SafeSearch = SafetyLevel.Moderate,
                 Extras = PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountFaves,
@@ -42,8 +43,10 @@ namespace SetBackground.PhotographyAPI
 
             var photos = _flickrAPI.PhotosSearch(options)
                             .Concat(_flickrAPI.PhotosSearch(options2)
-                                        .OrderByDescending(x => x.CountFaves))
-                            .OrderByDescending(x => x.CountFaves);
+                                        //.OrderByDescending(x => x.CountFaves)
+                                        )
+                            //.OrderByDescending(x => x.CountFaves);
+                            ;
 
             var orderedPhotos = photos.Where(x => x.DoesLargeExist);
             if (!orderedPhotos.Any())
@@ -54,11 +57,18 @@ namespace SetBackground.PhotographyAPI
             if (!photos.Any())
                 return "";
 
-            return orderedPhotos.FirstOrDefault().DoesLargeExist ?
-                        orderedPhotos.FirstOrDefault().LargeUrl :
-                        orderedPhotos.FirstOrDefault().DoesMediumExist ?
-                            orderedPhotos.FirstOrDefault().MediumUrl :
-                            orderedPhotos.FirstOrDefault().SmallUrl;
+            var selected = orderedPhotos.ElementAt((new Random()).Next(0, orderedPhotos.Count() - 1));
+
+            return selected.DoesLargeExist ?
+                        selected.LargeUrl :
+                        selected.DoesMediumExist ?
+                            selected.MediumUrl :
+                            selected.SmallUrl;
+            //return orderedPhotos.FirstOrDefault().DoesLargeExist ?
+            //            orderedPhotos.FirstOrDefault().LargeUrl :
+            //            orderedPhotos.FirstOrDefault().DoesMediumExist ?
+            //                orderedPhotos.FirstOrDefault().MediumUrl :
+            //                orderedPhotos.FirstOrDefault().SmallUrl;
 
         }
     }

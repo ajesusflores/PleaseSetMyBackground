@@ -23,7 +23,7 @@ namespace SetBackground
     class Program
     {
         static TimeSpan startTime = TimeSpan.Zero;
-        static TimeSpan interval = TimeSpan.FromSeconds(20);
+        static TimeSpan interval = TimeSpan.FromSeconds(25);
 
         const int SPI_SETDESKWALLPAPER = 20;
         const int SPIF_UPDATEINIFILE = 0x01;
@@ -47,52 +47,57 @@ namespace SetBackground
 
             var photosConfig = ConfigurationManager.GetSection("APIs/PhotographyAPI") as NameValueCollection;
             var flickrKey = photosConfig["FlickrAPI"];
+            var pexelsAPI = photosConfig["PexelsAPI"];
 
             var lastSong = string.Empty;
             var spotify = new SpotifyWeb(spotifyRedirectUrl, spotifRedirectPort, spotifyKey, Scope.UserReadPlaybackState);
             var musicMatch = new MusicXMatchAPI(musicXMatchKey);
             var msText = new MicrosoftTextAnalytics(MSAnalyticsKey);
             var flickr = new FlickrAPI(flickrKey);
+            var pexels = new PexelAPI(pexelsAPI);
 
             Console.WriteLine("==========================S T A R T==========================");
 
             var timer = new System.Threading.Timer((e) =>
             {
-                Console.WriteLine("**New Iteration**");
+                Console.WriteLine(Environment.NewLine + "**New Iteration**");
                 var song = spotify.GetCurrentSong();
                 if(song != null && song.Title != null)
                 {
-                    if(lastSong != song.Title)
+                    if (lastSong != song.Title)
                     {
                         lastSong = song.Title;
-                        Console.WriteLine($"{song.Artist} - {song.Title}: ");
+                        Console.WriteLine($"{song.Artist} - {song.Title}: " + Environment.NewLine);
                         var lyrics = musicMatch.GetLyricsAndLanguage(lastSong, song.Artist);
                         if(string.IsNullOrEmpty(lyrics.Item1))
                         {
                             Console.WriteLine("*2nd Call to lyrics Service");
                             lyrics = musicMatch.GetLyricsAndLanguage(lastSong, null);
                         }
-                        lyrics.Item1 = lyrics.Item1.Replace("\n", " ");
-                        Console.WriteLine(lyrics);
+                        lyrics.Item1 = lyrics.Item1.Replace("\n", " ").Replace("  ", " ").ToLower();
+                        Console.WriteLine(lyrics.Item1);
+                        Console.WriteLine(lyrics.Item2 + Environment.NewLine);
 
                         var songLanguage = msText.GetLanguage(lyrics.Item1);
                         var songKeys = msText.ExtractKeyPhrases(lyrics.Item1, songLanguage);
 
-                        Console.WriteLine(string.Join(Environment.NewLine, songKeys));
+                        Console.WriteLine(string.Join(Environment.NewLine, songKeys) + Environment.NewLine);
 
                         var textToSearch = GetTextToSearchImage(songKeys);
                         textToSearch = string.IsNullOrEmpty(textToSearch) ? song.Title : textToSearch;
                          
-                        string photo = flickr.GetImageFromText(textToSearch);
+                        string photo = pexels.GetImageFromText(textToSearch);
+                        if(string.IsNullOrEmpty(photo))
+                            photo = flickr.GetImageFromText(textToSearch);
+                        Console.WriteLine($"{textToSearch}: {photo}");
+
                         var fileName = photo.DownloadImageFromUrl("C:/newBackground");
                         SetWallpaper(fileName);
-
-                        Console.WriteLine($"{textToSearch}: {photo}" );
                     }
                     else
                         Console.WriteLine("no new song");
                 }
-                else
+                    else
                     Console.WriteLine("no song");
             }, null, startTime, interval);
 
@@ -106,7 +111,7 @@ namespace SetBackground
 
             var result = keys.FirstOrDefault(x => x.Contains(" "));
 
-            return result ?? (keys[0].Contains(" ") ?
+            return /*result ??*/ (keys[0].Contains(" ") ?
                                 keys[0] :
                                 keys[1].Contains(" ") ?
                                 keys[1] :
