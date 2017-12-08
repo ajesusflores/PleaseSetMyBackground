@@ -51,6 +51,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PexelsNet, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PexelsNet.2.2.0.0\lib\net452\PexelsNet.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.1.0\lib\net452\RestSharp.dll</HintPath>
     </Reference>
@@ -86,6 +89,7 @@
     <Compile Include="PhotographyAPI\DownloadHelper.cs" />
     <Compile Include="PhotographyAPI\FlickrAPI.cs" />
     <Compile Include="PhotographyAPI\IPhotographyProvider.cs" />
+    <Compile Include="PhotographyAPI\PexelAPI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
