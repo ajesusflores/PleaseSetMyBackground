@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace SetBackground.LanguageAPI
 {
-    public class MicrosoftTextAnalytics : IlanguageProvider
+    public class MicrosoftTextAnalytics : IlanguageProvider, IDisposable
     {
         ITextAnalyticsAPI _AnalyticsClient;
+        private bool disposedValue = false;
 
         public MicrosoftTextAnalytics(string key)
         {
@@ -56,6 +57,23 @@ namespace SetBackground.LanguageAPI
                 return result.Documents.First().KeyPhrases.ToArray();
 
             return new string[] { "Restricted" };
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (_AnalyticsClient != null) _AnalyticsClient.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
