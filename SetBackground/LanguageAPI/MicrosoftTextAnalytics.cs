@@ -15,10 +15,11 @@ namespace SetBackground.LanguageAPI
 
         public MicrosoftTextAnalytics(string key)
         {
-            _AnalyticsClient =  new TextAnalyticsAPI();
-            _AnalyticsClient.AzureRegion = AzureRegions.Westus;
-
-            _AnalyticsClient.SubscriptionKey = key;
+            _AnalyticsClient = new TextAnalyticsAPI
+            {
+                AzureRegion = AzureRegions.Westus,
+                SubscriptionKey = key
+            };
         }
 
         public string GetLanguage(string text)
