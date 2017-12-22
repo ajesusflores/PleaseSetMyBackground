@@ -86,9 +86,9 @@ namespace SetBackground
                         var textToSearch = GetTextToSearchImage(songKeys);
                         textToSearch = string.IsNullOrEmpty(textToSearch) ? song.Title : textToSearch;
                          
-                        string photo = pexels.GetImageFromText(textToSearch);
+                        string photo = pexels.GetImageUrlFromText(textToSearch);
                         if(string.IsNullOrEmpty(photo))
-                            photo = flickr.GetImageFromText(textToSearch);
+                            photo = flickr.GetImageUrlFromText(textToSearch);
                         Console.WriteLine($"{textToSearch}: {photo}");
 
                         var fileName = photo.DownloadImageFromUrl("C:/newBackground");

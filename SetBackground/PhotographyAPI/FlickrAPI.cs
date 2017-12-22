@@ -15,7 +15,7 @@ namespace SetBackground.PhotographyAPI
             _flickrAPI = new Flickr(apiKey);
         }
 
-        public dynamic GetImageFromText(string textToSearch)
+        public string GetImageUrlFromText(string textToSearch)
         {
             var options = new PhotoSearchOptions
             {
@@ -64,12 +64,6 @@ namespace SetBackground.PhotographyAPI
                         selected.DoesMediumExist ?
                             selected.MediumUrl :
                             selected.SmallUrl;
-            //return orderedPhotos.FirstOrDefault().DoesLargeExist ?
-            //            orderedPhotos.FirstOrDefault().LargeUrl :
-            //            orderedPhotos.FirstOrDefault().DoesMediumExist ?
-            //                orderedPhotos.FirstOrDefault().MediumUrl :
-            //                orderedPhotos.FirstOrDefault().SmallUrl;
-
         }
     }
 }

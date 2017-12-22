@@ -8,6 +8,6 @@ namespace SetBackground.PhotographyAPI
 {
     interface IPhotographyProvider
     {
-        dynamic GetImageFromText(string textToSearch);
+        string GetImageUrlFromText(string textToSearch);
     }
 }

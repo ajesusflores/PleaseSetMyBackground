@@ -15,7 +15,7 @@ namespace SetBackground.PhotographyAPI
         {
             _client = new PexelsClient(apiKey);
         }
-        public dynamic GetImageFromText(string textToSearch)
+        public string GetImageUrlFromText(string textToSearch)
         {
             var results = _client.SearchAsync(textToSearch, 1, 3).Result;
 
