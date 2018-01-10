@@ -13,7 +13,7 @@ namespace SetBackground.PhotographyAPI
         public static string DownloadImageFromUrl(this string imageUrl, string destinationFile)
         {
             var extension = Path.GetExtension(imageUrl);
-            var fileName = destinationFile + extension;
+            var fileName = $"{destinationFile}{extension}";
             if(!string.IsNullOrEmpty(imageUrl))
             {
                 using (WebClient client = new WebClient())

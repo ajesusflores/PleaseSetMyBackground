@@ -17,7 +17,7 @@ namespace SetBackground.PhotographyAPI
         }
         public string GetImageUrlFromText(string textToSearch)
         {
-            var results = _client.SearchAsync(textToSearch, 1, 3).Result;
+            var results = _client.SearchAsync(textToSearch, 1, 1).Result;
 
             return results.Photos.Any() ? results.Photos[0].Src.Original : "";
         }

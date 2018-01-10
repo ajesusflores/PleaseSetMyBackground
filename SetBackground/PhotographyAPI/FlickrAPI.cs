@@ -31,10 +31,8 @@ namespace SetBackground.PhotographyAPI
             var options2 = new PhotoSearchOptions
             {
                 PerPage = 3,
-                //Text = textToSearch,
                 SortOrder = PhotoSearchSortOrder.Relevance,
                 Tags = textToSearch.Split(' ')[0],
-                //Tags = textToSearch.Split(' ')[0],
                 MediaType = MediaType.Photos,
                 SafeSearch = SafetyLevel.Moderate,
                 Extras = PhotoSearchExtras.LargeUrl | PhotoSearchExtras.CountFaves,
@@ -42,17 +40,11 @@ namespace SetBackground.PhotographyAPI
             };
 
             var photos = _flickrAPI.PhotosSearch(options)
-                            .Concat(_flickrAPI.PhotosSearch(options2)
-                                        //.OrderByDescending(x => x.CountFaves)
-                                        )
-                            //.OrderByDescending(x => x.CountFaves);
-                            ;
+                            .Concat(_flickrAPI.PhotosSearch(options2));
 
             var orderedPhotos = photos.Where(x => x.DoesLargeExist);
             if (!orderedPhotos.Any())
                 orderedPhotos = photos;
-
-
 
             if (!photos.Any())
                 return "";

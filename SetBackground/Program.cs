@@ -111,11 +111,11 @@ namespace SetBackground
 
             var result = keys.FirstOrDefault(x => x.Contains(" "));
 
-            return /*result ??*/ (keys[0].Contains(" ") ?
+            return /*result ??*/ keys[0].Contains(" ") ?
                                 keys[0] :
                                 keys[1].Contains(" ") ?
                                 keys[1] :
-                                string.Format($"{keys[0]} {keys[1]}"));
+                                string.Format($"{keys[0]} {keys[1]}");
         }
 
         static void SetWallpaper(string fileName)
