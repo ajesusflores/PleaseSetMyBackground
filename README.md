@@ -7,4 +7,5 @@ Ho it works:
 3) Microsoft Text Analytics extracts key phrases from the lyrics
 
 4.1) Pexels returns an Image based on the key phrases
+
 4.2) If Pexels didn't return anything, repeat the search against Flickr
